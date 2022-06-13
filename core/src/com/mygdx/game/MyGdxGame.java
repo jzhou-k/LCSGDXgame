@@ -38,6 +38,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Array<Rectangle> rocks;
 	private long lastDropTime;
 	private long rockLastDropTime;
+	Player bucketObject;
 
 	@Override
 	public void create () {
@@ -65,6 +66,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		bucket.width = 64;
 		bucket.height = 64;
 
+		bucketObject = new Player(bucketImage,bucket,0,0);
+
 		raindrops = new Array<Rectangle>();
 		rocks = new Array<Rectangle>();
 		spawnRaindrop();
@@ -78,7 +81,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(bucketImage,bucket.x,bucket.y,64,64);
+		//batch.draw(bucketImage,bucket.x,bucket.y,64,64);
+		batch.draw(bucketObject.getObjectImg(),bucketObject.getRect().x,bucketObject.getRect().y,32,32);
 		for (Rectangle rock: rocks){
 			batch.draw(rockImage,rock.x,rock.y,64,64); //displaying egg smaller
 		}
