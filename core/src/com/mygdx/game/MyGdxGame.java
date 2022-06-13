@@ -102,11 +102,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			bucket.x = touchPos.x - 64 / 2; //64/2 because the bucket should be in the center of the cursor
 		}
 
-		//checking input
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime(); //render moves too fast
- 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) bucket.y += 200 * Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) bucket.y -= 200 * Gdx.graphics.getDeltaTime();
+
+		bucketObject.checkMove();
 
 		//checking how much time passed, if 1 second passed since last drop time, spawn raindrop
 		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
