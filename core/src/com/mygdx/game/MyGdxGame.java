@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.util.Iterator;
 import java.util.concurrent.RecursiveAction;
 
+//yes this is sprint2
+
 public class MyGdxGame extends ApplicationAdapter {
 
 	Texture img;
