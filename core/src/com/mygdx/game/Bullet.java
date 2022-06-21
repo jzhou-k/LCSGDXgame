@@ -16,6 +16,7 @@ public class Bullet extends GameObject{
     float angle;
     Sprite bulletSprite;
 
+
     public Bullet(Texture objectImg, Rectangle objectRect, int speed, Vector2 directionVector, float radian) {
         super(objectImg, objectRect, speed);
         this.directionVector = directionVector;

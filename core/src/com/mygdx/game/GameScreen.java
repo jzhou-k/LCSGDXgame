@@ -40,7 +40,7 @@ public class GameScreen implements Screen {
     private long lastDropTime;
     private long rockLastDropTime;
     Player bucketObject;
-
+    private Music bgMusic;
     Random rand = new Random();
     Texture bulletImg;
     //Bullet is where player is
@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
 
         //loading images
         dropImage = new Texture(Gdx.files.internal("drop.png"));
-        bucketImage = new Texture(Gdx.files.internal("bucket.jpg"));
+        bucketImage = new Texture(Gdx.files.internal("waterbucket.png"));
         rockImage = new Texture(Gdx.files.internal("rockegg.jpg"));
         bulletImg = new Texture(Gdx.files.internal("bullet.png"));
         background = new Texture(Gdx.files.internal("grass tile 1.png"));
@@ -69,6 +69,7 @@ public class GameScreen implements Screen {
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
 
+
         // looping music
 
 
@@ -77,8 +78,8 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 800, 800);
 
         bucket = new Rectangle();
-        bucket.x = 800 / 2 - 64 / 2;
-        bucket.y = 20;
+        bucket.x = 400;
+        bucket.y = 400;
         bucket.width = 64;
         bucket.height = 64;
 
@@ -98,7 +99,7 @@ public class GameScreen implements Screen {
     private void spawnRaindrop() {
         Rectangle raindrop = new Rectangle();
         raindrop.x = MathUtils.random(0, 800-64);
-        raindrop.y = 480;
+        raindrop.y = 800;
         raindrop.width = 64;
         raindrop.height = 64;
         raindrops.add(raindrop);
@@ -113,11 +114,11 @@ public class GameScreen implements Screen {
         //random spawning side
         if(xOry == 0){
             Rectangle rockRect = new Rectangle(randSpawn,0,64,64);
-            Enemy rock = new Enemy(rockImage,rockRect,2,10);
+            Enemy rock = new Enemy(rockImage,rockRect,3,10);
             rocks.add(rock);
         }else{
             Rectangle rockRect = new Rectangle(0,randSpawn,64,64);
-            Enemy rock = new Enemy(rockImage,rockRect,2,10);
+            Enemy rock = new Enemy(rockImage,rockRect,3,10);
             rocks.add(rock);
         }
 
@@ -131,6 +132,7 @@ public class GameScreen implements Screen {
     public void show() {
         //start play music when screen is shown
         rainMusic.play();
+
     }
 
     @Override
@@ -148,7 +150,7 @@ public class GameScreen implements Screen {
 
         //set origin center
         // set rotation
-        playerSprite.setSize(32,32);
+        playerSprite.setSize(64,64);
         playerSprite.setPosition(bucketObject.getRect().x,bucketObject.getRect().y);
         playerSprite.setOriginCenter();
         playerSprite.draw(batch);
@@ -160,8 +162,11 @@ public class GameScreen implements Screen {
         //batch.draw(bucketImage,bucket.x,bucket.y,64,64);
         //batch.draw(bucketObject.getObjectImg(),bucketObject.getRect().x,bucketObject.getRect().y,32,32);
         for (Enemy rock: rocks){
-            batch.draw(rockImage,rock.getRect().x,rock.getRect().y,64,64); //displaying egg smaller
+            batch.draw(rock.getFrame(),rock.getRect().x,rock.getRect().y,64,64); //displaying egg smaller
+
         }
+
+
 
         for(Rectangle raindrop: raindrops){
             batch.draw(dropImage, raindrop.x,raindrop.y);
@@ -222,7 +227,7 @@ public class GameScreen implements Screen {
 
         for(Iterator<Enemy> iter = rocks.iterator(); iter.hasNext();){
             Enemy rock = iter.next();
-
+            rock.update(Gdx.graphics.getDeltaTime());
             //checks if rock collided with player
             if(rock.checkCollision(bucketObject)){
                 //System.out.println(true);
